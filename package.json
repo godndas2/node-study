@@ -1,13 +1,32 @@
 {
-  "name": "express-mysql-example",
-  "version": "0.0.1",
-  "description": "",
+  "name": "nodejs-mysql-crud",
+  "version": "1.0.0",
+  "description": "NodeJS MySQL CRUD",
   "main": "index.js",
   "scripts": {
-    "start": "node index"
-},
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/godndas2/node-study"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mysql",
+    "crud"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/godndas2/node-study/issues"
+  },
+  "homepage": "https://github.com/godndas2",
   "dependencies": {
-    "express": "4.17.1",
-    "mysql": "2.18.1"
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-myconnection": "^1.0.4",
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0"
   }
 }

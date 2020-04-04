@@ -1,27 +1,37 @@
-var express    = require('express');
-var mysql      = require('mysql');
-var dbconfig   = require('./config/database.js');
-var connection = mysql.createConnection(dbconfig);
+const express = require('express'),
+    path = require('path'),
+    morgan = require('morgan'),
+    mysql = require('mysql'),
+    myConnection = require('express-myconnection');
 
-var app = express();
+const app = express();
 
-// configuration
+// importing routes
+const customerRoutes = require('./routes/customer');
+
+// settings
 app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-app.get('/', function(req, res){
-  res.send('Root');
-});
+// middlewares
+app.use(morgan('dev'));
+app.use(myConnection(mysql, {
+    host: 'localhost',
+    user: 'root',
+    password: 'test',
+    port: 3306,
+    database: 'node'
+}, 'single'));
+app.use(express.urlencoded({extended: false}));
 
-app.get('/persons', function(req, res){
+// routes
+app.use('/', customerRoutes);
 
-  connection.query('SELECT * from Persons', function(err, rows) {
-    if(err) throw err;
+// static files
+app.use(express.static(path.join(__dirname, 'public')));
 
-    console.log('The solution is: ', rows);
-    res.send(rows);
-  });
-});
-
-app.listen(app.get('port'), function () {
-  console.log('Express server listening on port ' + app.get('port'));
+// starting the server
+app.listen(app.get('port'), () => {
+    console.log(`server on port ${app.get('port')}`);
 });
